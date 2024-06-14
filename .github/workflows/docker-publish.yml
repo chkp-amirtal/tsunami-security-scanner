@@ -12,6 +12,8 @@ on:
     branches: [ "master" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
+    paths-ignore:
+      - 'notify_vulnerabilities/**'    
   pull_request:
     branches: [ "master" ]
 
