@@ -1,4 +1,4 @@
-name: Docker
+name: notify_vulnerabilities
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -84,7 +84,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
-          context: .
+          context: ./notify_vulnerabilities
           push: ${{ github.event_name != 'pull_request' }}
           tags: amirtal122018/notify_vulnerabilities:latest
           # tags: ${{ steps.meta.outputs.tags }}
