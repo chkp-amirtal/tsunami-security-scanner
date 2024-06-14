@@ -25,7 +25,10 @@ WORKDIR /usr/repos/tsunami-security-scanner
 COPY . .
 RUN ./gradlew shadowJar \
     && cp "$(find "./" -name "tsunami-main-*-cli.jar")" /usr/tsunami/tsunami.jar \
-    && cp ./tsunami.yaml /usr/tsunami
+    && cp ./tsunami.yaml /usr/tsunami 
+
+RUN cp ./scan_servers.sh /usr/tsunami \
+    && cp ./targets.txt /usr/tsunami 
 
 # Stage 2: Release
 FROM adoptopenjdk/openjdk13:debianslim-jre
@@ -42,5 +45,11 @@ WORKDIR /usr/tsunami
 
 COPY --from=0 /usr/tsunami /usr/tsunami
 
-ENTRYPOINT ["java", "-cp", "tsunami.jar:plugins/*", "-Dtsunami-config.location=tsunami.yaml", "com.google.tsunami.main.cli.TsunamiCli"]
-CMD ["--ip-v4-target=127.0.0.1", "--scan-results-local-output-format=JSON", "--scan-results-local-output-filename=logs/tsunami-output.json"]
+RUN ls -la /usr/tsunami
+
+# ENTRYPOINT ["java", "-cp", "tsunami.jar:plugins/*", "-Dtsunami-config.location=tsunami.yaml", "com.google.tsunami.main.cli.TsunamiCli"]
+# CMD ["--ip-v4-target=127.0.0.1", "--scan-results-local-output-format=JSON", "--scan-results-local-output-filename=logs/tsunami-output.json"]
+
+
+ENTRYPOINT [ "bash", "-c" ]
+CMD [ "./scan_servers.sh" ]
