@@ -1,0 +1,6 @@
+{
+  "scanStatus": "FAILED",
+  "scanStartTimestamp": "2024-06-12T17:36:01.521Z",
+  "scanDuration": "1.539s",
+  "statusMessage": "(Tsunami error PLUGIN_EXECUTION_ERROR): Plugin execution error on \u0027/Tsunami Team (tsunami-dev@google.com)/PORT_SCAN/NmapPortScanner/0.1\u0027."
+}
