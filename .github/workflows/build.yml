@@ -2,6 +2,8 @@ name: build
 
 on:
   push:
+    paths-ignore:
+      - 'notify_vulnerabilities/**' 
   pull_request:
 
 jobs:
