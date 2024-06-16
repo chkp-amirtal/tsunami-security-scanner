@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tsunami-security-scanner-job
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: tsunami-security-scanner
+        image: amirtal122018/tsunami-security-scanner:0.0.1
+        command: ["./scan_servers.sh"]
+        volumeMounts:
+        - name: targets-volume
+          mountPath: /usr/tsunami/targets.txt
+          subPath: targets.txt
+        - name: shared-volume
+          mountPath: /usr/tsunami/results
+      containers:
+      - name: tsunami-security-scanner-notifier
+        image: amirtal122018/notify_vulnerabilities:latest
+        volumeMounts:
+        - name: shared-volume
+          mountPath: /app/results
+        env:
+        - name: EMAIL_FROM
+          valueFrom:
+            configMapKeyRef:
+              name: email-config
+              key: EMAIL_FROM
+        - name: EMAIL_TO
+          valueFrom:
+            configMapKeyRef:
+              name: email-config
+              key: EMAIL_TO
+        - name: SMTP_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: email-config
+              key: SMTP_SERVER
+        - name: SMTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: email-config
+              key: SMTP_PORT
+        - name: SMTP_USER
+          valueFrom:
+            configMapKeyRef:
+              name: email-config
+              key: SMTP_USER
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: smtp-secret
+              key: SMTP_PASSWORD
+      restartPolicy: Never
+      volumes:
+      - name: targets-volume
+        configMap:
+          name: tsunami-targets-configmap
+      - name: shared-volume
+        emptyDir: {}
+  backoffLimit: 4

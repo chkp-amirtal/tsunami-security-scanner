@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unauthenticated-jupyter-notebook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unauthenticated-jupyter-notebook
+  template:
+    metadata:
+      labels:
+        app: unauthenticated-jupyter-notebook
+    spec:
+      containers:
+      - name: jupyter-notebook
+        image: jupyter/base-notebook
+        ports:
+        - containerPort: 8888
+        command: ["start-notebook.sh", "--NotebookApp.token=''"]
+        # args: ["start-notebook", "--NotebookApp.token=''"]  # Empty token to disable authentication

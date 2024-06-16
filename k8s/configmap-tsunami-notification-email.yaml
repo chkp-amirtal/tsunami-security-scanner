@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: email-config
+data:
+  EMAIL_FROM: "example@domain.com"
+  EMAIL_TO: "example@domain.com"
+  SMTP_SERVER: "smtp.gmail.com"
+  SMTP_USER: "example@domain.com"
+  SMTP_PORT: "587"

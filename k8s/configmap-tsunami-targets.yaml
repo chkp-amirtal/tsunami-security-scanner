@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tsunami-targets-configmap
+data:
+  targets.txt: |
+    127.0.0.1
+    10.244.0.19
