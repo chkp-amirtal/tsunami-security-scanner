@@ -13,7 +13,8 @@ on:
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
     paths-ignore:
-      - 'notify_vulnerabilities/**'    
+      - 'notify_vulnerabilities/**'
+      - 'k8s/**'
   pull_request:
     branches: [ "master" ]
 
