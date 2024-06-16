@@ -4,6 +4,7 @@ on:
   push:
     paths-ignore:
       - 'notify_vulnerabilities/**' 
+      - 'k8s/**'
   pull_request:
 
 jobs:
